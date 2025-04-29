@@ -8,6 +8,7 @@ export default function TherapistDashboard(){
     const navigate = useNavigate();
     const [therapist, setTherapist] = useState(null);
     const [loading, setLoading] = useState(true);
+
   
     useEffect(() => {
       const token = localStorage.getItem("token");
@@ -143,7 +144,7 @@ export default function TherapistDashboard(){
                     <div className="grid grid-cols-2 gap-4 mx-[20px] mt-[30px]">
                         {/* Patients */}
                         <div
-                        onClick={() => navigate("/patients")}
+                        onClick={() => navigate("/patient_requests")}
                         className="bg-white hover:bg-blue-200 cursor-pointer rounded-xl p-6 flex items-center justify-center shadow transition"
                         >
                         <span className="text-blue-800  text-lg hover:text-white">
@@ -153,7 +154,7 @@ export default function TherapistDashboard(){
 
                         {/* Requests */}
                         <div
-                        onClick={() => navigate("/requests")}
+                        onClick={() => navigate("/patient_requests")}
                         className="bg-white hover:bg-blue-200 cursor-pointer rounded-xl p-6 flex items-center justify-center shadow transition"
                         >
                         <span className="text-blue-800  text-lg">

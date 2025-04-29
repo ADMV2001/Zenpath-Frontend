@@ -19,6 +19,7 @@ import TherapistDashboard from './pages/therapist/therapistDashboard';
 import PatientEmailVerification from './pages/emailVerification/PatientEmailVerification';
 import TherapistOverview from './pages/therapist/therapistOverview';
 import Sessions from './pages/patient/sessions';
+import PatientRequests from './pages/therapist/patientRequests';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
 
         //Patients
         <Route path="/session_requests" element={<Sessions/>}/>
+        <Route path="/patient_requests" element={<PatientRequests/>}/>
 
         //emails
         <Route path="/email_verification" element={<PatientEmailVerification/>} />
