@@ -84,7 +84,9 @@ export default function TherapistList() {
               <p className="text-gray-700 text-[13px] font-semibold">{therapist.specialties || "Not Provided"}</p>
               <p className="text-gray-700 text-[13px]"><span>Experience :</span>{therapist.experience || "Not Provided"} years</p>
               
-              <button className="p-2 bg-blue-100 rounded-md text-[14px] text-blue-800 mt-[10px] cursor-pointer hover:scale-105">View Therapist</button>
+              <button className="p-2 bg-blue-100 rounded-md text-[14px] text-blue-800 mt-[10px] cursor-pointer hover:scale-105"
+                      onClick={() => navigate(`/therapist_overview/${therapist._id}`)}
+              >View Therapist</button>
             </div> 
           ))}
           

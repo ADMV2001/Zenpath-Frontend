@@ -17,6 +17,8 @@ import AboutZenPath from './pages/home/aboutus';
 import ContactUs from './pages/home/contactus';
 import TherapistDashboard from './pages/therapist/therapistDashboard';
 import PatientEmailVerification from './pages/emailVerification/PatientEmailVerification';
+import TherapistOverview from './pages/therapist/therapistOverview';
+import Sessions from './pages/patient/sessions';
 
 
 function App() {
@@ -53,6 +55,10 @@ function App() {
 
         //therapist
         <Route path="/therapist_dashboard" element={<TherapistDashboard/>}/>
+        <Route path="/therapist_overview/:id" element={<TherapistOverview/>}/>
+
+        //Patients
+        <Route path="/session_requests" element={<Sessions/>}/>
 
         //emails
         <Route path="/email_verification" element={<PatientEmailVerification/>} />

@@ -22,6 +22,7 @@ export default function NavBar() {
         <Link to="/contact" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Contact</Link>
         <Link to="/history" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">History</Link>
         <Link to="/profile" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Profile</Link>
+        <Link to="/session_requests" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Sessions</Link>
       </nav>
 
       {/* Right Side - Buttons */}
