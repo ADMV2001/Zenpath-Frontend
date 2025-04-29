@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../../components/navigationBar";
 
 export default function Sessions() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem("token");
