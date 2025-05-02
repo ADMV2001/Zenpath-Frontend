@@ -23,7 +23,7 @@ export default function RegisterPage() {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/patient/register", registerData, {
+      const response = await axios.post("http://localhost:3000/api/patient/register", registerData, {
         headers: {
           "Content-Type": "application/json",
         },

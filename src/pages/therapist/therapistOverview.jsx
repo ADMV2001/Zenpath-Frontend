@@ -14,7 +14,7 @@ export default function TherapistOverview(){
     const navigate = useNavigate()
 
     useEffect(()=>{
-        axios.get(`http://localhost:5000/api/therapist/getTherapist/${id}`).then((res)=>{
+        axios.get(`http://localhost:3000/api/therapist/getTherapist/${id}`).then((res)=>{
             console.log(res.data)
             setTherapist(res.data)
             setLoading("loaded")
@@ -32,7 +32,7 @@ export default function TherapistOverview(){
           return;
         }
 
-        axios.post("http://localhost:5000/api/session/request",
+        axios.post("http://localhost:3000/api/session/request",
           { therapistId },
           { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -56,7 +56,7 @@ export default function TherapistOverview(){
         <img
             src={
                 therapist.profilePicture
-                ? `http://localhost:5000/${therapist.profilePicture.replace(/\\/g, "/")}`
+                ? `http://localhost:3000/${therapist.profilePicture.replace(/\\/g, "/")}`
                 : "/doc.png"
             }
             onError={e => {

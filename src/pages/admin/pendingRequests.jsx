@@ -13,7 +13,7 @@ export default function PendingRequests() {
 
   const fetchPending = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/therapist/pending");
+      const res = await axios.get("http://localhost:3000/api/therapist/pending");
       setRequests(res.data);
     } catch (err) {
       console.error("Error fetching pending therapists:", err);
@@ -27,7 +27,7 @@ export default function PendingRequests() {
 
   const handleApprove = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/therapist/approve/${id}`);
+      await axios.put(`http://localhost:3000/api/therapist/approve/${id}`);
       toast.success("Therapist approved successfully!");
       setShowModal(false);
       fetchPending();
@@ -39,7 +39,7 @@ export default function PendingRequests() {
 
   const handleReject = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/therapist/reject/${id}`);
+      await axios.put(`http://localhost:3000/api/therapist/reject/${id}`);
       toast.success("Therapist Rejected!");
       setShowModal(false);
       fetchPending();
@@ -115,7 +115,7 @@ export default function PendingRequests() {
       <li>
         CV/Resume:
         <a
-          href={`http://localhost:5000/${selectedTherapist.cvOrResumeUrl}`}
+          href={`http://localhost:3000/${selectedTherapist.cvOrResumeUrl}`}
           target="_blank"
           rel="noreferrer"
           className="ml-2 underline"
@@ -124,7 +124,7 @@ export default function PendingRequests() {
         </a>{" "}
         |
         <a
-          href={`http://localhost:5000/${selectedTherapist.cvOrResumeUrl}`}
+          href={`http://localhost:3000/${selectedTherapist.cvOrResumeUrl}`}
           download
           className="ml-2 underline text-green-700"
         >
@@ -136,7 +136,7 @@ export default function PendingRequests() {
       <li>
         License Document:
         <a
-          href={`http://localhost:5000/${selectedTherapist.licenseDocument}`}
+          href={`http://localhost:3000/${selectedTherapist.licenseDocument}`}
           target="_blank"
           rel="noreferrer"
           className="ml-2 underline"
@@ -145,7 +145,7 @@ export default function PendingRequests() {
         </a>{" "}
         |
         <a
-          href={`http://localhost:5000/${selectedTherapist.licenseDocument}`}
+          href={`http://localhost:3000/${selectedTherapist.licenseDocument}`}
           download
           className="ml-2 underline text-green-700"
         >

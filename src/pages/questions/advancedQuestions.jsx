@@ -52,7 +52,7 @@ const AdvancedQuestions = () => {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "http://localhost:5000/api/phq/submit",
+        "http://localhost:3000/api/phq/submit",
         {
           name: user.name,
           email: user.email,

@@ -17,7 +17,7 @@ export default function Sessions() {
       return;
     }
 
-    axios.get("http://localhost:5000/api/session/my-requests", {
+    axios.get("http://localhost:3000/api/session/my-requests", {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => {
