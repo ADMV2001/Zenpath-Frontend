@@ -180,10 +180,11 @@ export default function PatientRequests(){
                                 <div>
                                   <h3 className="text-lg font-semibold text-blue-800 mb-2 mt-5">Mental Status</h3>
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700 text-sm">
-                                    <p><strong>PHQ-9 Score:</strong> {patientDetails.phqResults[0].score}</p>
                                     
-                                    <p><strong>Depression Status:</strong>{patientDetails.phqResults[0].status === "No depression" && <span className="text-green-500"> No Depression</span>} 
-                                    {patientDetails.phqResults[0].status !== "No depression" && patientDetails.phqResults[0].status}</p>
+                                    <p><strong>PHQ-9 Score:</strong> {patientDetails.phqResults.length > 0 && ( patientDetails.phqResults[0].score)} {patientDetails.phqResults.length == 0 && ('N/A')}</p>
+                                    
+                                    <p><strong>Depression Status:</strong>{ patientDetails.phqResults.length > 0 && (patientDetails.phqResults[0].status === "No depression" && <span className="text-green-500"> No Depression</span>)} 
+                                    {patientDetails.phqResults.length > 0 && (patientDetails.phqResults[0].status !== "No depression" && patientDetails.phqResults[0].status)}  {patientDetails.phqResults.length == 0 && ("N/A")}</p>
                                     
                                     <p><strong>Taking Mental Support :</strong>{patientDetails.basicInfo.mentalHealthSupport}</p>
                                   </div>
