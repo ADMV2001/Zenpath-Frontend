@@ -22,6 +22,7 @@ import Sessions from './pages/patient/sessions';
 import PatientRequests from './pages/therapist/patientRequests';
 import TherapistProfile from './pages/therapist/therapistProfile';
 import Appointments from './pages/therapist/appointments';
+import Patients from './pages/therapist/patients';
 
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
         <Route path="/therapist_overview/:id" element={<TherapistOverview/>}/>
         <Route path="/therapistProfile" element={<TherapistProfile/>}/>
         <Route path="/appointments" element={<Appointments/>}/>
+        <Route path="/patients" element={<Patients/>}/>
 
         //Patients
         <Route path="/session_requests" element={<Sessions/>}/>

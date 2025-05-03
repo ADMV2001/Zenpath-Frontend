@@ -28,7 +28,7 @@ return (
     <NavBar />
     <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 "> 
     
-    <Sidebar />
+    <Sidebar prop='Appointments' />
     
     <div className="max-w-xl max-h-xs mx-auto mt-6 p-4 bg-white shadow-md rounded-lg border border-blue-100 font-[Poppins]">
   <h2 className="text-xl font-semibold text-blue-700 mb-3 tracking-tight">📅 Your Calendar</h2>

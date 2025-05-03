@@ -48,7 +48,7 @@ export default function TherapistDashboard() {
         <TherapistNavBar isLogged={loggedIn} />
 
       <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 "> 
-      <Sidebar/>
+      <Sidebar prop='Overview' />
 
         <div className="min-h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 w-500 px-10 py-8">
           <h1 className="text-3xl font-bold text-blue-900">Welcome back, Dr. {therapist.name || "Johnson"}</h1>
