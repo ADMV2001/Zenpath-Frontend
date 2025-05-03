@@ -107,7 +107,7 @@ export default function PatientRequests(){
         <>
             <TherapistNavBar/>
             <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 "> 
-            <Sidebar/>
+            <Sidebar prop='Patient Requests'/>
             <div className="min-h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 w-500 px-10 py-8">
             <h1 className="text-3xl font-bold text-blue-900">Patient Requests</h1>
             <p className="text-gray-600 mb-6 mt-2">you have <span className="text-xl text-blue-800 font-semibold" >{reqCount} </span>New patient Requests</p>

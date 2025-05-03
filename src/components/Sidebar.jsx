@@ -21,7 +21,7 @@ const menuItems = [
   { name: "Settings", icon: Cog6ToothIcon, path: "/therapistProfile" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar(prop) {
   const navigate = useNavigate();
 
   return (
@@ -38,11 +38,12 @@ export default function Sidebar() {
         {/* Menu */}
         <nav className="space-y-3">
           {menuItems.map((item) => (
+            
             <div
               key={item.name}
               onClick={() => navigate(item.path)}
-              className="flex items-center p-3 rounded-md cursor-pointer hover:bg-blue-100 transition"
-            >
+
+              className={`flex items-center p-3 rounded-md cursor-pointer hover:bg-blue-100 transition ${prop.prop === item.name ? 'bg-blue-100' : ''}`}            >
               <item.icon className="h-5 w-5 mr-3 text-blue-600" />
               <span className="text-gray-700 font-medium">{item.name}</span>
               {item.badge && (
