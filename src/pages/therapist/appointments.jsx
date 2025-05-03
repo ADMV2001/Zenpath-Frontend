@@ -117,7 +117,7 @@ export default function Appointments() {
     }
 
   const handleEventClickOnCalendar = (arg) => {
-    
+    alert(`Event clicked: ${arg.event.title} on ${arg.event.id} `);
   };
 
   
@@ -138,7 +138,7 @@ export default function Appointments() {
                 plugins={[dayGridPlugin]}
                 initialView="dayGridMonth"
                 events={calendarEvents}
-                eventClick={handleEventClick}
+                eventClick={handleEventClickOnCalendar}
                 height="auto"
                 headerToolbar={{
                   left: 'prev,next today',
