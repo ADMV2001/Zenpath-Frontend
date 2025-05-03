@@ -5,6 +5,7 @@ import { FiMenu, FiX } from "react-icons/fi";  // Import icons for menu toggle
 export default function NavBar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);  // Toggle state for mobile menu
+  const token = localStorage.getItem("token");
 
   return (
     <header className="relative w-full h-[70px] flex items-center justify-between md:px-10 lg:px-16 font-[poppins] sticky top-0 bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 z-50">
@@ -20,16 +21,31 @@ export default function NavBar() {
         <Link to="/home" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Home</Link>
         <Link to="/about" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">About Us</Link>
         <Link to="/contact" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Contact</Link>
-        <Link to="/history" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">History</Link>
-        <Link to="/profile" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Profile</Link>
-        <Link to="/session_requests" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Sessions</Link>
+        
       </nav>
 
       {/* Right Side - Buttons */}
       <div className="hidden md:flex items-center gap-4 mr-27">
-        <button onClick={() => navigate("/login")} className="rounded-[5px] bg-white py-1 px-4 text-[#023E8A] border-1 font-medium">
-          Login
-        </button>
+        {
+          !token && (
+            <button onClick={() => navigate("/login")} className=" rounded-[5px] bg-white py-1 px-4 text-[#023E8A] border-1 font-medium">
+              Login
+            </button>
+
+          )
+        }
+
+        {
+          token && (
+            <button onClick={() => navigate("/patient_dashboard")} className=" rounded-[5px] bg-white py-1 px-4 text-[#023E8A] border-1 font-medium">
+              Go To dashboard
+            </button>
+
+          )
+        }
+        
+        
+
         <button
           onClick={() => navigate("/therapist_list")}
           className="bg-[#0077B6] px-4 py-1 rounded-[5px] text-white font-semibold hover:bg-[#005f99]"
@@ -51,9 +67,12 @@ export default function NavBar() {
           <Link to="/about" className="py-2 text-[#0077B6] font-semibold">About Us</Link>
           <Link to="/contact" className="py-2 text-[#0077B6] font-semibold">Contact</Link>
           <Link to="/resources" className="py-2 text-[#0077B6] font-semibold">Resources</Link>
+          
+
           <button onClick={() => navigate("/login")} className="mt-3 rounded-[5px] bg-blue-300 py-1 px-6 text-[#023E8A] font-medium">
             Login
           </button>
+          
           <button
           onClick={() => navigate("/therapist_list")}
           className="bg-[#0077B6] px-4 py-1 rounded-[5px] text-white font-semibold hover:bg-[#005f99]"

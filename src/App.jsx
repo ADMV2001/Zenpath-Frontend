@@ -23,6 +23,9 @@ import PatientRequests from './pages/therapist/patientRequests';
 import TherapistProfile from './pages/therapist/therapistProfile';
 import Appointments from './pages/therapist/appointments';
 import Patients from './pages/therapist/patients';
+import PatientDashboard from './pages/patient/patientDashboard';
+import PatientAppointments from './pages/patient/patientAppointments';
+import PatientProfile from './pages/patient/patientProfile';
 
 
 function App() {
@@ -67,6 +70,9 @@ function App() {
         //Patients
         <Route path="/session_requests" element={<Sessions/>}/>
         <Route path="/patient_requests" element={<PatientRequests/>}/>
+        <Route path="/patient_dashboard" element={<PatientDashboard/>}/>
+        <Route path="/patient_appointments" element={<PatientAppointments/>}/>
+        <Route path="/patient_profile" element={<PatientProfile/>}/>
 
         //emails
         <Route path="/email_verification" element={<PatientEmailVerification/>} />

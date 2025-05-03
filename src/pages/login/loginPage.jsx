@@ -53,7 +53,7 @@ if (user.userRole === "admin") {
     toast.error('Please verify your email before logging in.');
     return;
   } else {
-    navigate("/home");
+    navigate("/patient_dashboard");
     toast.success('User Login Successful!');
   }
 } else {
