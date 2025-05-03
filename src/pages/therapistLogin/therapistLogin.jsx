@@ -14,7 +14,7 @@ export default function TherapistLogin() {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/therapist/login", {
+      const res = await axios.post("http://localhost:3000/api/therapist/login", {
         email,
         password,
       });

@@ -36,7 +36,7 @@ export default function PatientEmailVerification() {
   const sendOtp = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/patient/send_otp",
+        "http://localhost:3000/api/patient/send_otp",
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -55,7 +55,7 @@ export default function PatientEmailVerification() {
     setLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/patient/verify_patient_email",
+        "http://localhost:3000/api/patient/verify_patient_email",
         { otp },
         { headers: { Authorization: `Bearer ${token}` } }
       );

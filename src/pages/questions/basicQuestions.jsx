@@ -103,7 +103,7 @@ export default function BasicQuestions() {
       }
   
       const res = await axios.post(
-        "http://localhost:5000/api/basic/submit",
+        "http://localhost:3000/api/basic/submit",
         {
           ...formData,
           name: user.name,

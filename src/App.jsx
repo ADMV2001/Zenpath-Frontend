@@ -20,6 +20,8 @@ import PatientEmailVerification from './pages/emailVerification/PatientEmailVeri
 import TherapistOverview from './pages/therapist/therapistOverview';
 import Sessions from './pages/patient/sessions';
 import PatientRequests from './pages/therapist/patientRequests';
+import TherapistProfile from './pages/therapist/therapistProfile';
+import Appointments from './pages/therapist/appointments';
 
 
 function App() {
@@ -57,6 +59,8 @@ function App() {
         //therapist
         <Route path="/therapist_dashboard" element={<TherapistDashboard/>}/>
         <Route path="/therapist_overview/:id" element={<TherapistOverview/>}/>
+        <Route path="/therapistProfile" element={<TherapistProfile/>}/>
+        <Route path="/appointments" element={<Appointments/>}/>
 
         //Patients
         <Route path="/session_requests" element={<Sessions/>}/>

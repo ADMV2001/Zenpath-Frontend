@@ -21,7 +21,7 @@ export default function TherapistList() {
 
     const fetchTherapists = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/therapist/approved", {
+        const res = await axios.get("http://localhost:3000/api/therapist/approved", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -70,7 +70,7 @@ export default function TherapistList() {
              <img
               src={
                 therapist.profilePicture
-                  ? `http://localhost:5000/${therapist.profilePicture.replace(/\\/g, "/")}`
+                  ? `http://localhost:3000/${therapist.profilePicture.replace(/\\/g, "/")}`
                   : "/doc.png"
               }
               onError={e => {
