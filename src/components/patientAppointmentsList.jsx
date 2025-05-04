@@ -32,25 +32,29 @@ export default function PatientAppointmentList() {
           <h2 className="text-xl font-semibold text-gray-800">Upcoming Sessions</h2>
           
         </div>
+
+      <div className="max-h-[250px] overflow-y-auto">
         {sessions.map((session, index) => (
-  <div key={session._id || index} className="flex justify-between items-center mb-1 p-4 border border-gray-200 rounded-lg ">
-    <div>
-      <p className="font-medium text-gray-700">{session.therapistId?.name || "Therapist"}</p>
-      <p className="text-sm text-gray-500">
-        {session.sessionDate} • {session.sessionTime} ({session.sessionDuration}) • {session.sessionType}
-      </p>
-    </div>
-    <div className="flex gap-30">
-      {session.state === "Confirmed" && (
-        <span className="w-[100px] bg-green-100 text-green-700 px-3 py-2 rounded-full text-sm font-medium text-center">Confirmed</span>
-      )}
-      {session.state === "Pending" && (
-        <span className="w-[100px] bg-yellow-100 text-yellow-700 px-3 py-2 rounded-full text-sm font-medium text-center">Pending</span>
-      )}
-      <button className="bg-blue-800 text-white text-sm px-4 py-2 rounded-md hover:scale-105 transition">Join</button>
-    </div>
-  </div>
-))}
+          <div key={session._id || index} className="flex justify-between items-center mb-1 p-4 border border-gray-200 rounded-lg ">
+            <div>
+              <p className="font-medium text-gray-700">{session.therapistId?.name || "Therapist"}</p>
+              <p className="text-sm text-gray-500">
+                {session.sessionDate} • {session.sessionTime} ({session.sessionDuration}) • {session.sessionType}
+              </p>
+            </div>
+            <div className="flex gap-30">
+              {session.state === "Confirmed" && (
+                <span className="w-[100px] bg-green-100 text-green-700 px-3 py-2 rounded-full text-sm font-medium text-center">Confirmed</span>
+              )}
+              {session.state === "Pending" && (
+                <span className="w-[100px] bg-yellow-100 text-yellow-700 px-3 py-2 rounded-full text-sm font-medium text-center">Pending</span>
+              )}
+              <button className="bg-blue-800 text-white text-sm px-4 py-2 rounded-md hover:scale-105 transition">Join</button>
+            </div>
+          </div>
+          
+        ))}
+         </div>
       </div>
     );
   }

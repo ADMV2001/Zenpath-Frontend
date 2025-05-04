@@ -67,16 +67,35 @@ export default function TherapistRegistration() {
       <NavBar />
       
       <div className="w-full flex justify-center items-center bg-gradient-to-r from-white to-blue-100 p-5 ">
-        <div className="w-[775px] h-[220px] text-center text-black bg-white shadow-lg rounded-[10px] mt-10">
-          <h1 className="font-[poppins] font-bold text-[22px] my-1">Registration Instructions</h1>
-          <p>Read the instructions carefully to smooth registration without rejecting the request.</p>
-          <p>1</p>
-          <p>2</p>
-          <p>3</p>
-          <p>4</p>
-          <p>5</p>
+        <div className="w-full max-w-2xl mx-auto bg-white shadow-xl rounded-xl mt-10 p-8">
+  <h1 className="font-poppins font-bold text-2xl text-red-700 mb-3 flex items-center justify-center gap-2">
+    <svg className="w-7 h-7 text-red-700" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12A9 9 0 113 12a9 9 0 0118 0z" />
+    </svg>
+    Registration Instructions
+  </h1>
+  <p className="text-gray-600 mb-4">
+    Please read these instructions carefully to ensure your registration request is processed smoothly and not rejected.
+  </p>
+  <ol className="list-decimal list-inside space-y-2 text-left text-gray-700">
+    <li>
+      <span className="font-semibold text-blue-800">License number:</span> This is <span className="underline">not</span> your driving license number. Use your therapist registration document number issued by <span className="font-medium">Sri Lanka Medical Council (SLMC)</span>.
+    </li>
+    <li>
+      <span className="font-semibold text-blue-800">Document upload:</span> Take clear photos of <span className="underline">both sides</span> of your registration legal document and upload them.
+    </li>
+    <li>
+      <span className="font-semibold text-blue-800">Certificates/Courses:</span> List all certificates or courses you have obtained.
+    </li>
+    <li>
+      <span className="font-semibold text-blue-800">Specialties:</span> Enter your areas of expertise in mental health, <span className="italic">comma separated</span>.
+    </li>
+    <li>
+      <span className="font-semibold text-blue-800">Education milestones:</span> Enter key milestones, e.g., <span className="italic">OL, AL, BSc, Masters, PhD, Doctor</span>.
+    </li>
+  </ol>
+</div>
 
-        </div>
       </div>
 
       <div className="w-full min-h-screen bg-gradient-to-r from-white to-blue-100 p-10 ">

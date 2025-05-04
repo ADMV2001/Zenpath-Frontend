@@ -1,11 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";  // Import icons for menu toggle
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);  // Toggle state for mobile menu
   const token = localStorage.getItem("token");
+
+  const HIDE_DASHBOARD_BTN_PATHS = [
+    "/patient_dashboard",
+    "/patient_wallet",
+    "/patient_profile",
+    "/patient_appointments",
+  ];
 
   return (
     <header className="relative w-full h-[70px] flex items-center justify-between md:px-10 lg:px-16 font-[poppins] sticky top-0 bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 z-50">
@@ -36,7 +44,7 @@ export default function NavBar() {
         }
 
         {
-          token && (
+          token && !HIDE_DASHBOARD_BTN_PATHS.includes(location.pathname) && (
             <button onClick={() => navigate("/patient_dashboard")} className=" rounded-[5px] bg-white py-1 px-4 text-[#023E8A] border-1 font-medium">
               Go To dashboard
             </button>
