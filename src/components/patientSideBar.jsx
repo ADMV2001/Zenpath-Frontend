@@ -17,7 +17,7 @@ const menuItems = [
   { name: "Overview", icon: HomeIcon, path: "/patient_dashboard" },
   { name: "Sessions", icon: CalendarIcon, path: "/patient_appointments",badge: 5 },
   { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: 5 },
-  { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" },
+  { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" }
 ];
 
 export default function PatientSidebar(prop) {

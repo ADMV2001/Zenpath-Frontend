@@ -26,7 +26,11 @@ import Patients from './pages/therapist/patients';
 import PatientDashboard from './pages/patient/patientDashboard';
 import PatientAppointments from './pages/patient/patientAppointments';
 import PatientProfile from './pages/patient/patientProfile';
+
+import PatientWallet from './pages/patient/patientWallet';
+
 import MeetingPage from './pages/therapist/meeting';
+
 
 
 function App() {
@@ -74,6 +78,7 @@ function App() {
         <Route path="/patient_dashboard" element={<PatientDashboard/>}/>
         <Route path="/patient_appointments" element={<PatientAppointments/>}/>
         <Route path="/patient_profile" element={<PatientProfile/>}/>
+        <Route path="/patient_wallet" element={<PatientWallet/>}/>
 
         //emails
         <Route path="/email_verification" element={<PatientEmailVerification/>} />
