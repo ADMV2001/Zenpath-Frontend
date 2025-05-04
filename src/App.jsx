@@ -26,7 +26,11 @@ import Patients from './pages/therapist/patients';
 import PatientDashboard from './pages/patient/patientDashboard';
 import PatientAppointments from './pages/patient/patientAppointments';
 import PatientProfile from './pages/patient/patientProfile';
+
 import PatientWallet from './pages/patient/patientWallet';
+
+import MeetingPage from './pages/therapist/meeting';
+
 
 
 function App() {
@@ -78,6 +82,9 @@ function App() {
 
         //emails
         <Route path="/email_verification" element={<PatientEmailVerification/>} />
+
+        //meettingPage
+        <Route path="/session/:id" element={<MeetingPage />} />
 
         
       </Routes>
