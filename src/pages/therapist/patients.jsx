@@ -19,8 +19,8 @@ export default function Patients(){
     const [modelSessionOpen, setModelSessionOpen] = useState(false)
     const [sessionDate, setSessionDate] = useState("")
     const [sessionTime, setSessionTime] = useState("")
-    const [sessionDuration, setSessionDuration] = useState("")
-    const [sessionType, setSessionType] = useState("")
+    const [sessionDuration, setSessionDuration] = useState("30")
+    const [sessionType, setSessionType] = useState("online")
     const [sessionNote, setSessionNote] = useState("")
 
     useEffect(()=>{
@@ -118,7 +118,54 @@ export default function Patients(){
   function sessionAddHandle(){
     console.log(sessionDate, sessionTime, sessionDuration, sessionType, sessionNote)
     console.log(patientDetails.patient._id)
-    setModelSessionOpen(false)
+
+    const patientID = patientDetails.patient._id
+
+    const token = localStorage.getItem("token")
+    
+    if(!token){
+        navigate("/login")
+        return
+    }
+
+    if(sessionTime === "" || sessionDate === ""  ){
+        toast.error("Please select a valid date and time")
+        return
+    }
+    if(sessionDate < new Date().toISOString().split("T")[0]){
+      toast.error("Please select a valid date") 
+      return
+
+  }
+    
+    setLoading(true)
+
+    axios.post(`http://localhost:3000/api/session/addsession`, 
+      {
+        userId:patientID,
+        sessionDate:sessionDate,
+        sessionTime:sessionTime,
+        sessionDuration:sessionDuration,
+        sessionType:sessionType,
+        sessionNote:sessionNote
+    }, {
+        headers: { Authorization: `Bearer ${token}` }
+    }).then((res)=>{
+        console.log(res)
+        toast.success("Session added successfully");
+        setModelSessionOpen(false)
+        setLoading(false)
+        setSessionDate("")
+        setSessionTime("")
+  }).
+  catch((err)=>{
+      console.error(err)
+      setModelSessionOpen(false)
+      toast.error("Failed to add session");
+      setLoading(false)
+
+  }
+  )
   }
 
 
@@ -291,16 +338,16 @@ export default function Patients(){
                                 <div>
                                   <h3 className="text-lg font-semibold text-blue-800 mb-2 mt-2">Meeting Details</h3>
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
-                                    <p><strong>Date:</strong></p> <input type="date" className="border border-gray-300 rounded-md px-2 py-1 w-full" id='session_date' onChange={(e) => setSessionDate(e.target.value)}/>
-                                    <p><strong>Time:</strong></p> <input type="time" className="border border-gray-300 rounded-md px-2 py-1 w-full" id='session_time' onChange={(e)=>setSessionTime(e.target.value)}/>
+                                    <p><strong>Date:</strong></p> <input type="date" className="border border-gray-300 rounded-md px-2 py-1 w-full" id='session_date' onChange={(e) => setSessionDate(e.target.value)} required />
+                                    <p><strong>Time:</strong></p> <input type="time" className="border border-gray-300 rounded-md px-2 py-1 w-full" id='session_time' onChange={(e)=>setSessionTime(e.target.value)} required/>
                                     <p><strong>Duration:</strong></p> <select className="border border-gray-300 rounded-md px-2 py-1 w-full" id='session_duration' onChange={(e)=>setSessionDuration(e.target.value)}>
-                                      <option value="30">30 minutes</option>
+                                      <option value="30" >30 minutes</option>
                                       <option value="60">1 hour</option>
                                       <option value="90">1.5 hours</option>
                                       <option value="120">2 hours</option>
                                     </select>
                                     <p><strong>Mode:</strong></p> <select className="border border-gray-300 rounded-md px-2 py-1 w-full" id='session_type' onChange={(e)=>setSessionType(e.target.value)}>
-                                    <option value="video" >Online</option>
+                                    <option value="online"  >Online</option>
                                       <option value="in-person">In-Person</option>
                                       
                                     </select>
