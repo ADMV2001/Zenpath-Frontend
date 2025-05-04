@@ -55,7 +55,7 @@ export default function PatientDashboard() {
           <p className="text-gray-600 mb-6">Here's an overview of your practice today.</p>
 
           <PatientDashboardCards/>
-          <PatientAppointmentList />
+          <PatientAppointmentList/>
         </div>
       </div>
     </>

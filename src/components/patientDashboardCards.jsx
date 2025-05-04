@@ -1,12 +1,33 @@
-import LinearProgress from '@mui/material/LinearProgress';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
 export default function PatientDashboardCards() {
+
+  const [sessionCount, setSessionCount] = useState(0);
+
     const cards = [
-      { label: "Total Patients", value: 128, change: "+12%", positive: true },
-      { label: "Weekly Sessions", value: 24, change: "+8%", positive: true },
-      { label: "Session Hours", value: 32.5, change: "-4%", positive: false },
-      { label: "New Inquiries", value: 9, change: "+18%", positive: true },
+      { label: "Total Sessions", value: sessionCount, change: "+12%", positive: true },
+      { label: "Upcoming Sessions", value: 5, change: "+2", positive: true },
+      { label: "Zen Wallet", value: 5, change: "+2", positive: true },
+      { label: "Zen Hours", value: 32.5, change: "-4%", positive: false },
+      
     ];
+
+    
+
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      
+      axios.get("http://localhost:3000/api/session/get_all_sessions", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then((res) => {
+        setSessionCount(res.data.length)
+        console.log(res.data.length)
+      })
+      
+      .catch(() => setSessionCount(0));
+    }, []);
   
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 h-35 w-full">
@@ -21,11 +42,10 @@ export default function PatientDashboardCards() {
             <span className={`text-sm ${card.positive ? 'text-green-500' : 'text-red-500'}`}>
                 {card.change} from last week
               </span>
-            <div className="w-full mt-2 h-2 color-gray-200 mt-10"> 
-                    <LinearProgress variant="determinate" value={card.value} />
-                </div>
           </div>
         ))}
+
+        
 
       </div>
     );
