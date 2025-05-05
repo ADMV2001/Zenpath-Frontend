@@ -31,6 +31,9 @@ import PatientWallet from './pages/patient/patientWallet';
 
 import MeetingPage from './pages/therapist/meeting';
 
+import Messages from './pages/therapist/messages';
+import PatientMessages from './pages/patient/Patientmessages';
+
 
 
 function App() {
@@ -85,6 +88,13 @@ function App() {
 
         //meettingPage
         <Route path="/session/:id" element={<MeetingPage />} />
+
+        //messages
+        <Route path="/messages" element={<Messages />} />
+
+        {/* Add more routes as needed */}
+
+        <Route path="/patient_messages" element={<PatientMessages/>} />
 
         
       </Routes>

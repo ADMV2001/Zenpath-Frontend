@@ -160,21 +160,40 @@ export default function PatientRequests(){
                           
                                 {/* Basic Details */} 
                                 <div className="border-1 border-gray-300 rounded-md p-4 mb-4">    
-                                <div>
-                                  <h3 className="text-lg font-semibold text-blue-800 mb-2">Basic Information</h3>
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
-                                    <p><strong>Name:</strong> {patientDetails.basicInfo.name}</p>
-                                    <p><strong>Email:</strong> {patientDetails.basicInfo.email}</p>
-                                    <p><strong>Phone:</strong> {patientDetails.patient.mobile}</p>
-                                    <p><strong>Gender:</strong> {patientDetails.basicInfo.gender}</p>
-                                    <p><strong>Age:</strong> {patientDetails.basicInfo.age}</p>
-                                    <p><strong>Country:</strong> {patientDetails.basicInfo.country}</p>
-                                    <p><strong>Employment Status:</strong> {patientDetails.basicInfo.employmentStatus}</p>
-                                    <p><strong>Relationship Status:</strong> {patientDetails.basicInfo.relationshipStatus}</p>
-                                    <p><strong>Sexual Orientation:</strong> {patientDetails.basicInfo.sexualOrientation}</p>
-                                    
-                                  </div>
+                                {/* Basic Details */}
+                                {patientDetails.basicInfo ? (
+                                <div>    
+                                    <div>
+                                    <h3 className="text-lg font-semibold text-blue-800 mb-2">Basic Information</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
+                                        <p><strong>Name:</strong> {patientDetails.basicInfo.name}</p>
+                                        <p><strong>Email:</strong> {patientDetails.basicInfo.email}</p>
+                                        <p><strong>Phone:</strong> {patientDetails.patient?.mobile}</p>
+                                        <p><strong>Gender:</strong> {patientDetails.basicInfo.gender}</p>
+                                        <p><strong>Age:</strong> {patientDetails.basicInfo.age}</p>
+                                        <p><strong>Country:</strong> {patientDetails.basicInfo.country}</p>
+                                        <p><strong>Employment Status:</strong> {patientDetails.basicInfo.employmentStatus}</p>
+                                        <p><strong>Relationship Status:</strong> {patientDetails.basicInfo.relationshipStatus}</p>
+                                        <p><strong>Sexual Orientation:</strong> {patientDetails.basicInfo.sexualOrientation}</p>
+                                    </div>
+                                    </div>
                                 </div>
+                                ):(
+                                    <div>    
+                                    <div>
+                                    <h3 className="text-lg font-semibold text-blue-800 mb-2">Basic Information</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
+                                    <p><strong>Name:</strong> {patientDetails.patient.name}</p>
+                                        <p><strong>Email:</strong> {patientDetails.patient.email}</p>
+                                        <p><strong>Phone:</strong> {patientDetails.patient.mobile}</p>
+
+
+                                    </div>
+                                    </div>
+                                </div>
+                                )
+                                
+                                }
                           
                                 {/* PHQ Results */}
                                 <div>
@@ -186,7 +205,7 @@ export default function PatientRequests(){
                                     <p><strong>Depression Status:</strong>{ patientDetails.phqResults.length > 0 && (patientDetails.phqResults[0].status === "No depression" && <span className="text-green-500"> No Depression</span>)} 
                                     {patientDetails.phqResults.length > 0 && (patientDetails.phqResults[0].status !== "No depression" && patientDetails.phqResults[0].status)}  {patientDetails.phqResults.length == 0 && ("N/A")}</p>
                                     
-                                    <p><strong>Taking Mental Support :</strong>{patientDetails.basicInfo.mentalHealthSupport}</p>
+                                    {patientDetails.basicInfo && (<p><strong>Taking Mental Support :</strong>{patientDetails.basicInfo.mentalHealthSupport}</p>)}
                                   </div>
                                 </div>
                           </div>
