@@ -17,9 +17,10 @@ import { VscGitPullRequestNewChanges } from "react-icons/vsc";
 const menuItems = [
   { name: "Overview", icon: HomeIcon, path: "/patient_dashboard" },
   { name: "Sessions", icon: CalendarIcon, path: "/patient_appointments",badge: 5 },
+
   { name: "Requests", icon: VscGitPullRequestNewChanges, path: "/session_requests" },
-  { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: 5 },
   { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" },
+  { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/patient_messages", badge: 5 },
 ];
 
 export default function PatientSidebar(prop) {
