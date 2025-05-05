@@ -25,12 +25,13 @@ import Appointments from './pages/therapist/appointments';
 import Patients from './pages/therapist/patients';
 import PatientDashboard from './pages/patient/patientDashboard';
 import PatientAppointments from './pages/patient/patientAppointments';
-import PatientProfile from './pages/patient/patientProfile';
+import PatientProfile from './pages/patient/patientProfile'
+import { HashRouter } from "react-router-dom";;
 
 import PatientWallet from './pages/patient/patientWallet';
 
 import MeetingPage from './pages/therapist/meeting';
-
+import PatientMeetingPage from './pages/patient/patientMeeting';
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
         //therapist
         <Route path="/therapist_dashboard" element={<TherapistDashboard/>}/>
         <Route path="/therapist_overview/:id" element={<TherapistOverview/>}/>
+        <Route path="/therapist_profile" element={<TherapistOverview/>}/>
         <Route path="/therapistProfile" element={<TherapistProfile/>}/>
         <Route path="/appointments" element={<Appointments/>}/>
         <Route path="/patients" element={<Patients/>}/>
@@ -85,6 +87,7 @@ function App() {
 
         //meettingPage
         <Route path="/session/:id" element={<MeetingPage />} />
+        <Route path="/patient_session/:id" element={<PatientMeetingPage />} />
 
         
       </Routes>

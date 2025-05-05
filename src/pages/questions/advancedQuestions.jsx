@@ -72,9 +72,7 @@ const AdvancedQuestions = () => {
   };
 
   const handleProceed = () => {
-    if (redirectPage === "resources") navigate("/resources");
-    else if (redirectPage === "therapistSelections") navigate("/therapistSelections");
-    else if (redirectPage === "doctorConsult") alert("We recommend you meet a doctor immediately for further treatment.");
+    navigate("/therapist_list");
   };
 
   const nextQuestion = () => {

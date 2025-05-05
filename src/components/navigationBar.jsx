@@ -13,6 +13,7 @@ export default function NavBar() {
     "/patient_wallet",
     "/patient_profile",
     "/patient_appointments",
+    "/session_requests"
   ];
 
   return (
