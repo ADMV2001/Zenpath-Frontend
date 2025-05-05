@@ -14,16 +14,12 @@ export default function DashboardCards() {
           <div key={index} className="bg-white p-4 rounded-lg shadow">
             <h3 className="text-gray-500 text-sm">{card.label}</h3>
             <div className="flex items-baseline justify-between mt-2">
-              <p className="text-2xl font-bold text-gray-800">{card.value}</p>
+              <p className="text-[40px] font-bold text-green-600">{card.value}</p>
 
               
             </div>
-            <span className={`text-sm ${card.positive ? 'text-green-500' : 'text-red-500'}`}>
-                {card.change} from last week
-              </span>
-            <div className="w-full mt-2 h-2 color-gray-200 mt-10"> 
-                    <LinearProgress variant="determinate" value={card.value} />
-                </div>
+
+
           </div>
         ))}
 

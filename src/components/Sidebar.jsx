@@ -18,7 +18,7 @@ const menuItems = [
 
   { name: "Appointments", icon: CalendarIcon, path: "/appointments",badge: 5 },
   { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: 5 },
-  { name: "Settings", icon: Cog6ToothIcon, path: "/therapistProfile" },
+  { name: "Profile", icon: Cog6ToothIcon, path: "/therapistProfile" },
 ];
 
 export default function Sidebar(prop) {
