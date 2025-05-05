@@ -78,59 +78,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="w-full max-w-6xl mx-auto text-center py-16 px-6 mt-[-50px]">
-      <motion.h2
-        className="text-4xl font-bold text-[#03045E]"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        Our Testimonials
-      </motion.h2>
-      <motion.p
-        className="text-gray-700 mt-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-      >
-        See why people love us. {" "}
-        <Link to="#" className="text-[#0096C7] font-semibold hover:underline">
-          See all reviews
-        </Link>
-      </motion.p>
-
-      <Swiper
-        modules={[Autoplay, Pagination]}
-        spaceBetween={20}
-        slidesPerView={1.2}
-        breakpoints={{
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-        autoplay={{ delay: 4000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        className="mt-8"
-      >
-        {testimonials.map((t, index) => (
-          <SwiperSlide key={index}>
-            <motion.div
-              className="p-6 rounded-xl shadow-lg bg-white flex flex-col items-center text-center border border-gray-200"
-              whileHover={{ scale: 1.05 }}
-            >
-              <img
-                src={t.image}
-                alt={t.name}
-                className="w-24 h-24 rounded-full object-cover border-4 border-blue-200 shadow-md"
-              />
-              <p className="text-gray-800 mt-4 italic">"{t.text}"</p>
-              <p className="text-gray-900 font-semibold mt-2">{t.name}</p>
-            </motion.div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </section>
-
+      
     <StatsSection /> 
 
     <FAQSection/> 
