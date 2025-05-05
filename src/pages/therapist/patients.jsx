@@ -275,21 +275,36 @@ export default function Patients(){
                           
                                 {/* Basic Details */} 
                                 <div className="border-1 border-gray-300 rounded-md p-4 mb-4">    
-                                <div>
-                                  <h3 className="text-lg font-semibold text-blue-800 mb-2">Basic Information</h3>
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
-                                    <p><strong>Name:</strong> {patientDetails.basicInfo.name}</p>
-                                    <p><strong>Email:</strong> {patientDetails.basicInfo.email}</p>
-                                    <p><strong>Phone:</strong> {patientDetails.patient.mobile}</p>
-                                    <p><strong>Gender:</strong> {patientDetails.basicInfo.gender}</p>
-                                    <p><strong>Age:</strong> {patientDetails.basicInfo.age}</p>
-                                    <p><strong>Country:</strong> {patientDetails.basicInfo.country}</p>
-                                    <p><strong>Employment Status:</strong> {patientDetails.basicInfo.employmentStatus}</p>
-                                    <p><strong>Relationship Status:</strong> {patientDetails.basicInfo.relationshipStatus}</p>
-                                    <p><strong>Sexual Orientation:</strong> {patientDetails.basicInfo.sexualOrientation}</p>
-                                    
-                                  </div>
+                                {patientDetails.basicInfo ? (
+                                <div>    
+                                    <div>
+                                    <h3 className="text-lg font-semibold text-blue-800 mb-2">Basic Information</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
+                                        <p><strong>Name:</strong> {patientDetails.basicInfo.name}</p>
+                                        <p><strong>Email:</strong> {patientDetails.basicInfo.email}</p>
+                                        <p><strong>Phone:</strong> {patientDetails.patient?.mobile}</p>
+                                        <p><strong>Gender:</strong> {patientDetails.basicInfo.gender}</p>
+                                        <p><strong>Age:</strong> {patientDetails.basicInfo.age}</p>
+                                        <p><strong>Country:</strong> {patientDetails.basicInfo.country}</p>
+                                        <p><strong>Employment Status:</strong> {patientDetails.basicInfo.employmentStatus}</p>
+                                        <p><strong>Relationship Status:</strong> {patientDetails.basicInfo.relationshipStatus}</p>
+                                        <p><strong>Sexual Orientation:</strong> {patientDetails.basicInfo.sexualOrientation}</p>
+                                    </div>
+                                    </div>
                                 </div>
+                                ):(
+                                    <div>    
+                                    <div>
+                                    <h3 className="text-lg font-semibold text-blue-800 mb-2">Basic Information</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
+                                    <p><strong>Name:</strong> {patientDetails.patient.name}</p>
+                                        <p><strong>Email:</strong> {patientDetails.patient.email}</p>
+                                        <p><strong>Phone:</strong> {patientDetails.patient.mobile}</p>
+                                    </div>
+                                    </div>
+                                </div>
+                                )
+                                }
                           
                                 {/* PHQ Results */}
                                 <div>
@@ -301,7 +316,7 @@ export default function Patients(){
                                     <p><strong>Depression Status:</strong>{ patientDetails.phqResults.length > 0 && (patientDetails.phqResults[0].status === "No depression" && <span className="text-green-500"> No Depression</span>)} 
                                     {patientDetails.phqResults.length > 0 && (patientDetails.phqResults[0].status !== "No depression" && patientDetails.phqResults[0].status)}  {patientDetails.phqResults.length == 0 && ("N/A")}</p>
                                     
-                                    <p><strong>Taking Mental Support :</strong>{patientDetails.basicInfo.mentalHealthSupport}</p>
+                                   {patientDetails.basicInfo && ( <p><strong>Taking Mental Support :</strong>{patientDetails.basicInfo.mentalHealthSupport}</p>)}
                                   </div>
                                 </div>
                           </div>
@@ -317,7 +332,7 @@ export default function Patients(){
                               <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-2xl space-y-6">
                                 {/* Header */}
                                 <div className="flex items-center justify-between pb-4">
-                                  <h2 className="text-2xl font-bold text-blue-800">Add a Session for {patientDetails.basicInfo.name}</h2>
+                                  <h2 className="text-2xl font-bold text-blue-800">Add a Session for {patientDetails.patient.name}</h2>
                                   <button
                                     onClick={() => setModelSessionOpen(false)}
                                     className="text-gray-400 hover:text-blue-800 hover:scale-120 transition cursor-pointer"
@@ -331,8 +346,17 @@ export default function Patients(){
                                 <div>
                                   <h3 className="text-lg font-semibold text-blue-800 mb-2">Patient Details</h3>
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-6 text-gray-700 text-sm">
-                                    <p><strong>Name:</strong> {patientDetails.basicInfo.name}</p>
-                                    <p><strong>Email:</strong> {patientDetails.basicInfo.email}</p>
+                                  {patientDetails.basicInfo ? (
+                                      <>
+                                        <p><strong>Name:</strong> {patientDetails.basicInfo.name}</p>
+                                        <p><strong>Email:</strong> {patientDetails.basicInfo.email}</p>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <p><strong>Name:</strong> {patientDetails.patient.name}</p>
+                                        <p><strong>Email:</strong> {patientDetails.patient.email}</p>
+                                      </>
+                                    )}
                                     </div>
                                 </div>
                                 <div>
