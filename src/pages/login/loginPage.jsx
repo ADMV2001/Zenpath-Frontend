@@ -38,10 +38,11 @@ export default function LoginPage() {
       // Save to localStorage
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userRole", user.userRole);
 
       // Check role first
 if (user.userRole === "admin") {
-  navigate("/admin");
+  navigate("/admin/requests");
   toast.success('Admin Login Successful!');
 } else if (user.userRole === "therapist") {
   navigate("/therapist_dashboard");

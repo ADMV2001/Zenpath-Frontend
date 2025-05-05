@@ -12,12 +12,15 @@ import {
 PlusIcon
  
 } from "@heroicons/react/24/outline";
+import { VscGitPullRequestNewChanges } from "react-icons/vsc";
 
 const menuItems = [
   { name: "Overview", icon: HomeIcon, path: "/patient_dashboard" },
   { name: "Sessions", icon: CalendarIcon, path: "/patient_appointments",badge: 5 },
+
+  { name: "Requests", icon: VscGitPullRequestNewChanges, path: "/session_requests" },
+  { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" },
   { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/patient_messages", badge: 5 },
-  { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" }
 ];
 
 export default function PatientSidebar(prop) {
@@ -31,7 +34,7 @@ export default function PatientSidebar(prop) {
   }
 
   return (
-    <div className=" max-w-md h-screen bg-white  p-6 flex flex-col border-1 border-gray-200 ">
+    <div className="max-w-md h-screen bg-white  p-6 flex flex-col border-1 border-gray-200 ">
       {/* Logo */}
       
 

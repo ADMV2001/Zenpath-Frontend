@@ -26,8 +26,16 @@ export default function MeetingNavBar({ actor }) {
 
           )
         }
-                {
+        {
           token && actor==="therapist" && (
+            <button onClick={() => navigate("/therapist_dashboard")} className=" rounded-[5px] bg-white py-1 px-4 text-[#023E8A] border-1 font-medium">
+              Go Back to dashboard
+            </button>
+
+          )
+        }
+        {
+          token && actor==="admin" && (
             <button onClick={() => navigate("/therapist_dashboard")} className=" rounded-[5px] bg-white py-1 px-4 text-[#023E8A] border-1 font-medium">
               Go Back to dashboard
             </button>

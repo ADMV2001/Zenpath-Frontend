@@ -215,47 +215,47 @@ export default function Appointments() {
                 {events.length} {sessionTitle} sessions</span>
                 </div>
                 <div className="p-4 bg-white rounded-md  border border-gray-200">
-  <div className="flex flex-col md:flex-row md:items-center gap-4">
-    <p className="text-md text-gray-500">Filter </p>
+    <div className="flex flex-col md:flex-row md:items-center gap-4">
+      <p className="text-md text-gray-500">Filter </p>
 
-    {/* Session State Filter */}
-    <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
-        <div>
-        <p className="text-xs text-gray-500 mb-1">Session State</p>
-      <select
-        id="sessionState"
-        className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        onChange={(e) => {handleStateFilter(e.target.value)}}
-      >
-        <option value="Upcoming">Upcoming</option>
-        <option value="pending">Pending</option>
-        <option value="finished">Finished</option>
-        <option value="all">All</option>
-      </select>
-    </div>
-    </div>
-
-    {/* Session Type Filter */}
-
-    <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
-        <div>
-      <p className="text-xs text-gray-500 mb-1">Session Type</p>
-      <select
-        id="sessionType"
-        className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        onChange={(e) => {handleModeFilter(e.target.value)}}
-      >
-
-        <option value="all">All</option>
-        <option value="Video Call">Online</option>
-        <option value="In Person">In Person</option>
-      </select>
-
-      
+      {/* Session State Filter */}
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
+          <div>
+          <p className="text-xs text-gray-500 mb-1">Session State</p>
+        <select
+          id="sessionState"
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          onChange={(e) => {handleStateFilter(e.target.value)}}
+        >
+          <option value="Upcoming">Upcoming</option>
+          <option value="pending">Pending</option>
+          <option value="finished">Finished</option>
+          <option value="all">All</option>
+        </select>
       </div>
-      <button className="bg-gray-400 text-white text-sm px-4 py-2 rounded mt-5 cursor-pointer hover:scale-105 transition" onClick={() => {setEvents(constevents);setSessionTitle("Total")}}>Reset</button>
+      </div>
+
+      {/* Session Type Filter */}
+
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-2">
+          <div>
+        <p className="text-xs text-gray-500 mb-1">Session Type</p>
+        <select
+          id="sessionType"
+          className="border border-gray-300 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          onChange={(e) => {handleModeFilter(e.target.value)}}
+        >
+
+          <option value="all">All</option>
+          <option value="Video Call">Online</option>
+          <option value="In Person">In Person</option>
+        </select>
+
+        
+        </div>
+        <button className="bg-gray-400 text-white text-sm px-4 py-2 rounded mt-5 cursor-pointer hover:scale-105 transition" onClick={() => {setEvents(constevents);setSessionTitle("Total")}}>Reset</button>
+      </div>
     </div>
-  </div>
 </div>
    
               </div>
@@ -303,6 +303,7 @@ export default function Appointments() {
                     <p className="text-gray-500">No sessions available</p>
                   </div>
                 )}
+                
                 {/* Session Model View */}
                 {viewReqModel && (
                     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center">

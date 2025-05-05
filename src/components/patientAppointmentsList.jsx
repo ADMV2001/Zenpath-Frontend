@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 export default function PatientAppointmentList() {
 
     const [sessions, setSessions] = useState([])
+    const [viewModel, setViewModel] = useState(false)
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -25,6 +26,28 @@ export default function PatientAppointmentList() {
         setSessions([])
       })
     },[])
+
+    const startMeeting = (sessionId,roomName) => {
+      console.log(roomName);
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+          navigate("/login");
+          return;
+      }
+      axios.post("http://localhost:3000/api/session/updateSessionState",{sessionId,state:"Started"}, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+          },
+      })
+      .then((res) => {
+          navigate(`/patient_session/${sessionId}`);
+      })
+      .catch((err) => {
+          console.error("Error fetching events:", err);
+          setLoading(false);
+      });  
+    }
   
     return (
       <div className="bg-white p-6 rounded-lg shadow mt-20">
@@ -49,12 +72,26 @@ export default function PatientAppointmentList() {
               {session.state === "Pending" && (
                 <span className="w-[100px] bg-yellow-100 text-yellow-700 px-3 py-2 rounded-full text-sm font-medium text-center">Pending</span>
               )}
-              <button className="bg-blue-800 text-white text-sm px-4 py-2 rounded-md hover:scale-105 transition">Join</button>
+              
+              { session.state === "Started" && (
+                <button className="bg-blue-800 text-white text-sm px-4 py-2 rounded-md hover:scale-105 transition"
+                        onClick={() => {startMeeting(session._id,session.roomName)}}
+                >Join</button>
+              )}
+
+              { session.state === "Confirmed" || session.state === "Pending" && (
+                <button className="bg-blue-800 text-white text-sm px-4 py-2 rounded-md hover:scale-105 transition"
+                onClick={() => navigate("/patient_appointments")}
+                >View</button>
+              )}
+              
             </div>
           </div>
           
         ))}
          </div>
+
+         
       </div>
     );
   }
