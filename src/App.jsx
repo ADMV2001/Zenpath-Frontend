@@ -27,6 +27,7 @@ import PatientDashboard from './pages/patient/patientDashboard';
 import PatientAppointments from './pages/patient/patientAppointments';
 import PatientProfile from './pages/patient/patientProfile'
 import { HashRouter } from "react-router-dom";;
+import TherapistWallet from './pages/therapist/therapist_wallet';
 
 import PatientWallet from './pages/patient/patientWallet';
 
@@ -102,6 +103,7 @@ function App() {
         {/* Add more routes as needed */}
 
         <Route path="/patient_messages" element={<PatientMessages/>} />
+        <Route path="/therapist_wallet" element={<TherapistWallet/>} />
 
         
       </Routes>

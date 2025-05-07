@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";  // Import icons for menu toggle
 
+
 export default function TherapistNavBar(isLoggedIn) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);  // Toggle state for mobile menu
@@ -24,7 +25,6 @@ export default function TherapistNavBar(isLoggedIn) {
       <nav className="hidden md:flex gap-6">
         <Link to="/about" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">About Us</Link>
         <Link to="/contact" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">Contact</Link>
-        <Link to="/history" className=" text-[16px] text-[#0077B6] hover:text-[#03045E] hover:scale-110 transition duration-400 ease-in-out">History</Link>
       </nav>
 
       {/* Right Side - Buttons */}

@@ -10,19 +10,60 @@ import {
 PlusIcon
  
 } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const menuItems = [
-  { name: "Overview", icon: HomeIcon, path: "/therapist_dashboard" },
-  { name: "Patients", icon: UsersIcon, path: "/patients" },
-  { name: "Patient Requests", icon: PlusIcon, path: "/patient_requests" },
-
-  { name: "Appointments", icon: CalendarIcon, path: "/appointments",badge: 5 },
-  { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: 5 },
-  { name: "Profile", icon: Cog6ToothIcon, path: "/therapistProfile" },
-];
 
 export default function Sidebar(prop) {
+    const [reqCount, setReqCount] = useState(0);
+    const [appointmentsCnt, setAppointmentsCnt] = useState([]);
   const navigate = useNavigate();
+      useEffect(()=>{
+          const token = localStorage.getItem("token")
+          
+          if(!token){
+              navigate("/login")
+              return
+          }
+  
+          axios.get("http://localhost:3000/api/session/therapist-requests", {
+              headers: { Authorization: `Bearer ${token}` }
+          }).then((res)=>{
+              setReqCount(res.data.length)
+          }).catch((err)=>{
+              console.error(err)
+          })   
+      },[]);
+
+          useEffect(() => {
+            const fetchAppointments = async () => {
+              try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                  console.error("No token found");
+                  return;
+                }
+                const response = await axios.get("http://localhost:3000/api/session/getReccentSessions", {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                setAppointmentsCnt(response.data.length);
+              } catch (error) {
+                console.error("Error fetching appointments:", error);
+              }
+            };
+            fetchAppointments();
+          }, []);
+
+
+      const menuItems = [
+        { name: "Overview", icon: HomeIcon, path: "/therapist_dashboard" },
+        { name: "Patients", icon: UsersIcon, path: "/patients" },
+        { name: "Patient Requests", icon: PlusIcon, path: "/patient_requests",badge: reqCount.toString()  },
+      
+        { name: "Sessions", icon: CalendarIcon, path: "/appointments",badge: appointmentsCnt.toString() },
+        { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: 5 },
+        { name: "Profile", icon: Cog6ToothIcon, path: "/therapistProfile" },
+      ];
 
   return (
     <div className=" max-w-md h-screen bg-white  p-6 flex flex-col border-1 border-gray-200 ">
@@ -46,7 +87,8 @@ export default function Sidebar(prop) {
               className={`flex items-center p-3 rounded-md cursor-pointer hover:bg-blue-100 transition ${prop.prop === item.name ? 'bg-blue-100' : ''}`}            >
               <item.icon className="h-5 w-5 mr-3 text-blue-600" />
               <span className="text-gray-700 font-medium">{item.name}</span>
-              {item.badge && (
+              {item.badge && item.badge>0 &&(
+                
                 <span className="ml-auto bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
                   {item.badge}
                 </span>

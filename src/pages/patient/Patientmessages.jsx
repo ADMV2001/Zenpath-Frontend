@@ -56,20 +56,22 @@ export default function PatientMessages() {
       
   }
   
-  // function handleSearch(e) {
-  //   const searchTerm = e.target.value.toLowerCase();
-    
-  //   if (searchTerm === "") {
-  //     setUsers(constUser);
-  //     return;
-  //   }
-    
-  //   const filteredResults = constUser.filter(user => {
-  //     return user.name && user.name.toLowerCase().includes(searchTerm);
-  //   });
-    
-  //   setUsers(filteredResults);
-  // }
+  function handleSearch(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    console.log(searchTerm);
+    if (searchTerm === "") {
+      setUsers(constUser);
+      return;
+    }
+    else{   
+      const filteredResults = constUser.filter(user => {
+      return user.name && user.name.toLowerCase().includes(searchTerm);
+    });
+    setUsers(filteredResults);
+
+  }
+  
+  }
 
   const handleSend = () => {
     if (!newMessage.trim()) return;
@@ -216,7 +218,7 @@ export default function PatientMessages() {
                 type="text"
                 placeholder="Search for therapists..."
                 className="border border-gray-300 rounded px-4 py-2 mb-4 w-full"
-                // onChange={(e)=> handleSearch(e)}
+                onChange={(e)=> handleSearch(e)}
                 />
               <ul>
                 <div className=" mb-2 max-h-[500px] overflow-y-auto">
@@ -269,7 +271,14 @@ export default function PatientMessages() {
                       </div>
                     );
                   })}
+                  
                   <div ref={messagesEndRef} />
+                  <button
+                onClick={() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })}
+                className="absolute bottom-10 right-10 bg-transparent text-blue-800 hover:bg-blue-300  hover:text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
+              >
+                ↓
+              </button>
                 </div>
               ) : (
                 <div className="flex-1 p-4 flex items-center justify-center bg-gray-50">

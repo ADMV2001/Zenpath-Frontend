@@ -57,17 +57,19 @@ export default function Messages() {
   
   function handleSearch(e) {
     const searchTerm = e.target.value.toLowerCase();
-    
+    console.log(searchTerm);
     if (searchTerm === "") {
       setUsers(constUser);
       return;
     }
-    
-    const filteredResults = constUser.filter(user => {
+    else{   
+      const filteredResults = constUser.filter(user => {
       return user.name && user.name.toLowerCase().includes(searchTerm);
     });
-    
     setUsers(filteredResults);
+
+  }
+  
   }
 
   const handleSend = () => {
@@ -198,8 +200,10 @@ export default function Messages() {
   return (
     <>
       <NavBar />
-      <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 overflow-hidden">
+      <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200">
+        <div className="w-[205px]">
         <Sidebar prop="Messages" />
+        </div>
 
         <div className="flex flex-col flex-grow p-6 overflow-hidden">
           <h1 className="text-3xl font-bold text-blue-900">Message</h1>
@@ -213,7 +217,7 @@ export default function Messages() {
                 type="text"
                 placeholder="Search for patients..."
                 className="border border-gray-300 rounded px-4 py-2 mb-4 w-full"
-                // onChange={(e)=> handleSearch(e)}
+                onChange={(e)=> handleSearch(e)}
                 />
               <ul>
                 <div className=" mb-2 max-h-[500px] overflow-y-auto">
@@ -267,6 +271,12 @@ export default function Messages() {
                     );
                   })}
                   <div ref={messagesEndRef} />
+                  <button
+                onClick={() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })}
+                className="absolute bottom-10 right-10 bg-transparent text-blue-800 hover:bg-blue-300  hover:text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
+              >
+                ↓
+              </button>
                 </div>
               ) : (
                 <div className="flex-1 p-4 flex items-center justify-center bg-gray-50">
