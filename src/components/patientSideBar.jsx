@@ -1,7 +1,8 @@
 // src/components/Sidebar.jsx
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { useEffect } from "react";
+import axios from "axios";
 import {
   HomeIcon,
   CalendarIcon,
@@ -14,25 +15,86 @@ PlusIcon
 } from "@heroicons/react/24/outline";
 import { VscGitPullRequestNewChanges } from "react-icons/vsc";
 
-const menuItems = [
-  { name: "Overview", icon: HomeIcon, path: "/patient_dashboard" },
-  { name: "Sessions", icon: CalendarIcon, path: "/patient_appointments",badge: 5 },
-
-  { name: "Requests", icon: VscGitPullRequestNewChanges, path: "/session_requests" },
-  { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" },
-  { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/patient_messages", badge: 5 },
-];
 
 export default function PatientSidebar(prop) {
+
   const navigate = useNavigate();
 
   const [logoutModel, setLogoutModel] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [appointmentsCnt, setAppointmentsCnt] = useState(0);
+  const [pendingCnt, setPendingCnt] = useState(0);
+
+
+const menuItems = [
+  { name: "Overview", icon: HomeIcon, path: "/patient_dashboard" },
+  { name: "Sessions", icon: CalendarIcon, path: "/patient_appointments",badge: (appointmentsCnt+pendingCnt).toString() },
+
+  { name: "Requests", icon: VscGitPullRequestNewChanges, path: "/session_requests" },
+  { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/patient_messages", badge: unreadCount.toString() },
+
+  { name: "profile", icon: Cog6ToothIcon, path: "/patient_profile" },
+];
 
   function handleLogout() {
     localStorage.removeItem("token");
     navigate("/login") 
   }
+        useEffect(() => {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            navigate("/login");
+            return;
+          }
+      
+          axios.get("http://localhost:3000/api/chat/get-unread-count", {
+            headers: { Authorization: `Bearer ${token}` }})
+            .then((res)=>{
+              setUnreadCount(res.data.count);
+            }).catch((err)=>{
+              console.error(err)
+            }
+            )
+        },[])
 
+        useEffect(() => {
+          const fetchAppointments = async () => {
+            try {
+              const token = localStorage.getItem("token");
+              if (!token) {
+                console.error("No token found");
+                return;
+              } 
+              const response = await axios.get("http://localhost:3000/api/session/get_upcoming_sessions", {
+                headers: { Authorization: `Bearer ${token}` },
+              });
+               setAppointmentsCnt(response.data.length)
+            } catch (error) {
+              console.error("Error fetching appointments:", error);
+            }
+          };
+          fetchAppointments();
+        }, []);
+
+        useEffect(() => {
+          const fetchPendingAppointments = async () => {
+            try {
+              const token = localStorage.getItem("token");
+              if (!token) {
+                console.error("No token found");
+                return;
+              } 
+              const response = await axios.get("http://localhost:3000/api/session/getpending_sessions", {
+                headers: { Authorization: `Bearer ${token}` },
+              });
+               setPendingCnt(response.data);
+            } catch (error) {
+              console.error("Error fetching appointments:", error);
+            }
+          };
+          fetchPendingAppointments();
+        }, []);
+       
   return (
     <div className="max-w-md h-screen bg-white  p-6 flex flex-col border-1 border-gray-200 ">
       {/* Logo */}
@@ -55,8 +117,9 @@ export default function PatientSidebar(prop) {
               className={`flex items-center p-3 rounded-md cursor-pointer hover:bg-blue-100 transition ${prop.prop === item.name ? 'bg-blue-100' : ''}`}            >
               <item.icon className="h-5 w-5 mr-3 text-blue-600" />
               <span className="text-gray-700 font-medium">{item.name}</span>
-              {item.badge && (
-                <span className="ml-auto bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
+              {item.badge && item.badge>0 &&(
+                
+                <span className="ml-auto bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
                   {item.badge}
                 </span>
               )}

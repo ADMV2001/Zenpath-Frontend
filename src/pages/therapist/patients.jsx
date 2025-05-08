@@ -225,7 +225,7 @@ export default function Patients(){
               </button>
               <button
                 className="bg-transparent cursor-pointer hover:scale-110 transition"
-                onClick={() => handleView(request._id, request.userId)}
+                onClick={() => navigate(`/messages`)}
               >
                 <ChatBubbleOvalLeftIcon className="h-6 w-6 text-blue-800" />
               </button>

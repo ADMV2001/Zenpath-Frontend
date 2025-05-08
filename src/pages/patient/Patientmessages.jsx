@@ -36,6 +36,9 @@ export default function PatientMessages() {
   const [newMessage, setNewMessage] = useState("");
   const [manual, setManual] = useState(false);
   const [constUser, setConstUser] = useState([]);
+  const [unreadUsers,setUnreadUsers]=useState([])
+  const [unreadUserArr,setUnreadUserArr]=useState([])
+  const [userClickedUsers, setUserClickedUsers] = useState([]);
 
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -194,10 +197,34 @@ export default function PatientMessages() {
   const handleUserClick = (user) => {
     setSelectedUser(user);
     setMessages([]);
+    setUserClickedUsers((prev) => [...prev, user.id]);
    
     fetchFromDb(currentUser._id, user.id,manual);
     setManual(true)
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate('/login')
+      return
+    }
+    axios
+      .get("http://localhost:3000/api/chat/get-unread-users", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setUnreadUsers(res.data.unreadUsers);
+            let unreadUserArr=res.data.unreadUsers.map((user)=>{
+              return user.senderId
+            })
+            setUnreadUserArr(unreadUserArr);
+          })
+          .catch((err) => {
+            console.error("Error fetching :", err);
+          });
+  }, []);
 
 
   return (
@@ -222,15 +249,38 @@ export default function PatientMessages() {
                 />
               <ul>
                 <div className=" mb-2 max-h-[500px] overflow-y-auto">
-                {users.map((user) => (
+                {  users
+                  .sort((a, b) => {
+                    const aIsUnread = unreadUserArr.includes(a.id);
+                    const bIsUnread = unreadUserArr.includes(b.id);
+                    
+                    if (aIsUnread && !bIsUnread) return -1;  // 'a' is unread, so place it before 'b'
+                    if (!aIsUnread && bIsUnread) return 1;   // 'b' is unread, so place it before 'a'
+                    return 0;  // If both are unread or both are read, keep their order as is
+                 }).map((user) => (
                   <li
                     key={user.id}
                     onClick={() => handleUserClick(user)}
                     className={`p-2 mb-2 cursor-pointer rounded ${
                       selectedUser.id === user.id ? "bg-blue-200" : "hover:bg-gray-200"
                     }`}
+             
                   >
-                    {user.name}
+              {
+                    unreadUserArr.includes(user.id) && user.id!=selectedUser.id && !(userClickedUsers.includes(user.id)) ? (
+                      <div>
+                        <span className="font-semibold ">{user.name}</span>
+                        <span className="text-xs text-blue-600 float-right bg-blue-100 rounded-xl p-1 pl-2 pr-2 ">
+                          
+                          {
+                            unreadUsers.find(item => item.senderId === user.id)?.unreadCount
+                          }
+                        </span>
+                      </div>
+                    ) : (
+                      <span>{user.name}</span>
+                    )
+                  }
                   </li>
                 ))}
                 </div>
@@ -259,8 +309,8 @@ export default function PatientMessages() {
                         <div
                           className={`px-4 py-2 rounded-lg max-w-xs ${
                             isSender
-                              ? "bg-gray-300 text-gray-800"
-                              : "bg-blue-500 text-white"
+                              ? "bg-blue-500 text-white"
+                              : "bg-gray-300 text-gray-800"
                           }`}
                         >
                           {msg.message}
@@ -311,7 +361,7 @@ export default function PatientMessages() {
                 <div className="p-4 bg-white flex">
                   <input
                     className="flex-1 border border-gray-300 rounded px-4 py-2 outline-none"
-                    placeholder="Select a patient to start the chat"
+                    placeholder="Select a therapist to start the chat"
                     disabled
                   />
                 </div>
