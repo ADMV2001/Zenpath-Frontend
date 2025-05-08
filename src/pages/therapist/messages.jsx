@@ -35,6 +35,9 @@ export default function Messages() {
   const [newMessage, setNewMessage] = useState("");
   const [manual, setManual] = useState(false);
   const [constUser, setConstUser] = useState([]);
+  const [unreadUsers,setUnreadUsers]=useState([])
+  const [unreadUserArr,setUnreadUserArr]=useState([])
+  const [userClickedUsers, setUserClickedUsers] = useState([]);
 
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -57,17 +60,19 @@ export default function Messages() {
   
   function handleSearch(e) {
     const searchTerm = e.target.value.toLowerCase();
-    
+    console.log(searchTerm);
     if (searchTerm === "") {
       setUsers(constUser);
       return;
     }
-    
-    const filteredResults = constUser.filter(user => {
+    else{   
+      const filteredResults = constUser.filter(user => {
       return user.name && user.name.toLowerCase().includes(searchTerm);
     });
-    
     setUsers(filteredResults);
+
+  }
+  
   }
 
   const handleSend = () => {
@@ -186,9 +191,33 @@ export default function Messages() {
     }
   }, [messages]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate('/login')
+      return
+    }
+    axios
+      .get("http://localhost:3000/api/chat/get-unread-users", {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((res) => {
+            setUnreadUsers(res.data.unreadUsers);
+            let unreadUserArr=res.data.unreadUsers.map((user)=>{
+              return user.senderId
+            })
+            setUnreadUserArr(unreadUserArr);
+          })
+          .catch((err) => {
+            console.error("Error fetching :", err);
+          });
+  }, []);
   const handleUserClick = (user) => {
     setSelectedUser(user);
     setMessages([]);
+    setUserClickedUsers((prev) => [...prev, user.id]);
    
     fetchFromDb(currentUser._id, user.id,manual);
     setManual(true)
@@ -198,8 +227,10 @@ export default function Messages() {
   return (
     <>
       <NavBar />
-      <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 overflow-hidden">
+      <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200">
+        <div className="w-[205px]">
         <Sidebar prop="Messages" />
+        </div>
 
         <div className="flex flex-col flex-grow p-6 overflow-hidden">
           <h1 className="text-3xl font-bold text-blue-900">Message</h1>
@@ -213,19 +244,42 @@ export default function Messages() {
                 type="text"
                 placeholder="Search for patients..."
                 className="border border-gray-300 rounded px-4 py-2 mb-4 w-full"
-                // onChange={(e)=> handleSearch(e)}
+                onChange={(e)=> handleSearch(e)}
                 />
               <ul>
                 <div className=" mb-2 max-h-[500px] overflow-y-auto">
-                {users.map((user) => (
+                {  users
+                  .sort((a, b) => {
+                    const aIsUnread = unreadUserArr.includes(a.id);
+                    const bIsUnread = unreadUserArr.includes(b.id);
+                    
+                    if (aIsUnread && !bIsUnread) return -1;  // 'a' is unread, so place it before 'b'
+                    if (!aIsUnread && bIsUnread) return 1;   // 'b' is unread, so place it before 'a'
+                    return 0;  // If both are unread or both are read, keep their order as is
+                 }).map((user) => (
                   <li
                     key={user.id}
                     onClick={() => handleUserClick(user)}
                     className={`p-2 mb-2 cursor-pointer rounded ${
                       selectedUser.id === user.id ? "bg-blue-200" : "hover:bg-gray-200"
                     }`}
+             
                   >
-                    {user.name}
+              {
+                    unreadUserArr.includes(user.id) && user.id!=selectedUser.id && !(userClickedUsers.includes(user.id)) ? (
+                      <div>
+                        <span className="font-semibold ">{user.name}</span>
+                        <span className="text-xs text-blue-600 float-right bg-blue-100 rounded-xl p-1 pl-2 pr-2 ">
+                          
+                          {
+                            unreadUsers.find(item => item.senderId === user.id)?.unreadCount
+                          }
+                        </span>
+                      </div>
+                    ) : (
+                      <span>{user.name}</span>
+                    )
+                  }
                   </li>
                 ))}
                 </div>
@@ -254,8 +308,8 @@ export default function Messages() {
                         <div
                           className={`px-4 py-2 rounded-lg max-w-xs ${
                             isSender
-                              ? "bg-gray-300 text-gray-800"
-                              : "bg-blue-500 text-white"
+                              ? "bg-blue-500 text-white"
+                              : "bg-gray-300 text-gray-800"
                           }`}
                         >
                           {msg.message}
@@ -267,6 +321,12 @@ export default function Messages() {
                     );
                   })}
                   <div ref={messagesEndRef} />
+                  <button
+                onClick={() => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })}
+                className="absolute bottom-10 right-10 bg-transparent text-blue-800 hover:bg-blue-300  hover:text-white px-3 py-2 rounded-full shadow-lg cursor-pointer"
+              >
+                ↓
+              </button>
                 </div>
               ) : (
                 <div className="flex-1 p-4 flex items-center justify-center bg-gray-50">

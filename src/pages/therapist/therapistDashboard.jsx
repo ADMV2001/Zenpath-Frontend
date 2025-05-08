@@ -49,6 +49,8 @@ export default function TherapistDashboard() {
       .finally(() => setLoading(false));
   }, [navigate]);
 
+
+
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center"><p>Loading…</p></div>;
   }
@@ -77,6 +79,7 @@ export default function TherapistDashboard() {
      <>
 
         <TherapistNavBar isLogged={loggedIn} />
+        
 
       <div className="flex w-full h-screen bg-gradient-to-r from-white to-blue-100 border-b border-gray-200 "> 
       <Sidebar prop='Overview' />

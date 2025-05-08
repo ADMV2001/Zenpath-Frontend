@@ -42,7 +42,10 @@ export default function TherapistProfile() {
         <div className="min-h-screen bg-[#FDFEFE]">
       <TherapistNavBar isLogged={loggedIn} />
       <div className="flex">
+      <div className="w-[205px]">
+
         <Sidebar prop="Profile" />
+        </div>
         <div className="flex-1 p-8">
           <div className="bg-white rounded-lg shadow-md p-6">
             <h1 className="text-2xl font-semibold text-blue-800 mb-4">

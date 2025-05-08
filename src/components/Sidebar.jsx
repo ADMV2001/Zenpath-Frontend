@@ -10,19 +10,84 @@ import {
 PlusIcon
  
 } from "@heroicons/react/24/outline";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const menuItems = [
-  { name: "Overview", icon: HomeIcon, path: "/therapist_dashboard" },
-  { name: "Patients", icon: UsersIcon, path: "/patients" },
-  { name: "Patient Requests", icon: PlusIcon, path: "/patient_requests" },
-
-  { name: "Appointments", icon: CalendarIcon, path: "/appointments",badge: 5 },
-  { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: 5 },
-  { name: "Profile", icon: Cog6ToothIcon, path: "/therapistProfile" },
-];
 
 export default function Sidebar(prop) {
+    const [logoutModel, setLogoutModel] = useState(false);
+    const [reqCount, setReqCount] = useState(0);
+    const [appointmentsCnt, setAppointmentsCnt] = useState([]);
+    const [unreadCount, setUnreadCount] = useState(0);
   const navigate = useNavigate();
+      useEffect(()=>{
+          const token = localStorage.getItem("token")
+          
+          if(!token){
+              navigate("/login")
+              return
+          }
+  
+          axios.get("http://localhost:3000/api/session/therapist-requests", {
+              headers: { Authorization: `Bearer ${token}` }
+          }).then((res)=>{
+              setReqCount(res.data.length)
+          }).catch((err)=>{
+              console.error(err)
+          })   
+      },[]);
+
+      useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          navigate("/login");
+          return;
+        }
+    
+        axios.get("http://localhost:3000/api/chat/get-unread-count", {
+          headers: { Authorization: `Bearer ${token}` }})
+          .then((res)=>{
+            setUnreadCount(res.data.count);
+          }).catch((err)=>{
+            console.error(err)
+          }
+          )
+      },[])
+
+      useEffect(() => {
+            const fetchAppointments = async () => {
+              try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                  console.error("No token found");
+                  return;
+                }
+                const response = await axios.get("http://localhost:3000/api/session/getReccentSessions", {
+                  headers: { Authorization: `Bearer ${token}` },
+                });
+                setAppointmentsCnt(response.data.length);
+              } catch (error) {
+                console.error("Error fetching appointments:", error);
+              }
+            };
+            fetchAppointments();
+          }, []);
+
+          function handleLogout() {
+            localStorage.removeItem("token");
+            navigate("/login") 
+          }
+
+
+      const menuItems = [
+        { name: "Overview", icon: HomeIcon, path: "/therapist_dashboard" },
+        { name: "Patients", icon: UsersIcon, path: "/patients" },
+        { name: "Patient Requests", icon: PlusIcon, path: "/patient_requests",badge: reqCount.toString()  },
+      
+        { name: "Sessions", icon: CalendarIcon, path: "/appointments",badge: appointmentsCnt.toString() },
+        { name: "Messages", icon: ChatBubbleBottomCenterTextIcon, path: "/messages", badge: unreadCount.toString() },
+        { name: "Profile", icon: Cog6ToothIcon, path: "/therapistProfile" },
+      ];
 
   return (
     <div className=" max-w-md h-screen bg-white  p-6 flex flex-col border-1 border-gray-200 ">
@@ -46,8 +111,9 @@ export default function Sidebar(prop) {
               className={`flex items-center p-3 rounded-md cursor-pointer hover:bg-blue-100 transition ${prop.prop === item.name ? 'bg-blue-100' : ''}`}            >
               <item.icon className="h-5 w-5 mr-3 text-blue-600" />
               <span className="text-gray-700 font-medium">{item.name}</span>
-              {item.badge && (
-                <span className="ml-auto bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded-full">
+              {item.badge && item.badge>0 &&(
+                
+                <span className="ml-auto bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded-full">
                   {item.badge}
                 </span>
               )}
@@ -55,21 +121,43 @@ export default function Sidebar(prop) {
           ))}
           
           {/* Logout */}
-            <div
-              onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/login");
-              }}
+          <div
               className="flex flat-bottom p-3 rounded-md cursor-pointer hover:bg-red-100 transition"
             >
               <ArrowRightOnRectangleIcon className="h-5 w-5 mr-3 text-red-600" />
-              <span className="text-red-700 font-medium">Logout</span>
+              <span className="text-red-600 font-medium" onClick={()=>{
+                setLogoutModel(true);
+              }}>Logout</span>
             </div>
 
             </nav>
           </div>
 
-
+          {logoutModel && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+                <div className="bg-white rounded-2xl shadow-2xl w-[400px] max-w-md p-8 flex flex-col items-center">
+                
+                <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">Are you logging out?</h2>
+                <p className="text-gray-600 mb-6 text-center">
+                    You can always log back in at any time.
+                </p>
+                <div className="flex w-full gap-4">
+                    <button
+                    className="flex-1 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+                    onClick={handleLogout}
+                    >
+                    Logout
+                    </button>
+                    <button
+                    className="flex-1 py-2 rounded-lg bg-gray-200 text-gray-800 font-semibold hover:bg-gray-300 transition"
+                    onClick={() => setLogoutModel(false)}
+                    >
+                    Cancel
+                    </button>
+                </div>
+                </div>
+            </div>
+            )}
     </div>
   );
 }

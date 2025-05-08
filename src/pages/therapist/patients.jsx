@@ -194,8 +194,6 @@ export default function Patients(){
     <thead className="border border-gray-200 rounded-xl bg-gray-100">
       <tr >
         <th className="p-3 font-medium text-gray-500">Patient Name</th>
-        <th className="p-3 font-medium text-gray-500 ">Prev Session</th>
-        <th className="p-3 font-medium text-gray-500">Next Session</th>
         <th className="p-3 font-medium text-gray-700"></th>
   
       </tr>
@@ -207,12 +205,7 @@ export default function Patients(){
           <td className="p-4">
             <p className="font-medium text-gray-700">{request.userId?.name}</p>
           </td>
-          <td className="p-4">
-            <p className="font-light text-gray-700">22/04/2025</p>
-          </td>
-          <td className="p-4">
-            <p className="font-light text-gray-700">23/04/2025</p>
-          </td>
+          
           <td className="p-4">
             
             <div className="flex gap-10 justify-end">
@@ -232,7 +225,7 @@ export default function Patients(){
               </button>
               <button
                 className="bg-transparent cursor-pointer hover:scale-110 transition"
-                onClick={() => handleView(request._id, request.userId)}
+                onClick={() => navigate(`/messages`)}
               >
                 <ChatBubbleOvalLeftIcon className="h-6 w-6 text-blue-800" />
               </button>
