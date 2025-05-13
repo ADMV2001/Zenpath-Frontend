@@ -10,6 +10,7 @@ import PatientDashboardCards from "../../components/patientDashboardCards";
 
 export default function PatientDashboard() {
   const navigate = useNavigate();
+  
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);

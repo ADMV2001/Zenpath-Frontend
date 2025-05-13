@@ -18,8 +18,10 @@ dayjs.extend(isYesterday);
 
 const formatMessageTime = (timestamp) => {
   const date = dayjs(timestamp);
+
   if (date.isToday()) return `Today at ${date.format("h:mm A")}`;
   if (date.isYesterday()) return `Yesterday at ${date.format("h:mm A")}`;
+
   return date.format("MMM D, YYYY [at] h:mm A");
 };
 
@@ -35,8 +37,8 @@ export default function Messages() {
   const [newMessage, setNewMessage] = useState("");
   const [manual, setManual] = useState(false);
   const [constUser, setConstUser] = useState([]);
-  const [unreadUsers,setUnreadUsers]=useState([])
-  const [unreadUserArr,setUnreadUserArr]=useState([])
+  const [unreadUsers,setUnreadUsers]=useState([]);
+  const [unreadUserArr,setUnreadUserArr]=useState([]);
   const [userClickedUsers, setUserClickedUsers] = useState([]);
 
   const messagesEndRef = useRef(null);
@@ -45,6 +47,7 @@ export default function Messages() {
   const isUserAtBottom = () => {
     const container = chatContainerRef.current;
     if (!container) return false;
+
     const threshold = 150;
     const position = container.scrollTop + container.clientHeight;
     const height = container.scrollHeight;
@@ -61,22 +64,22 @@ export default function Messages() {
   function handleSearch(e) {
     const searchTerm = e.target.value.toLowerCase();
     console.log(searchTerm);
-    if (searchTerm === "") {
-      setUsers(constUser);
-      return;
-    }
-    else{   
-      const filteredResults = constUser.filter(user => {
-      return user.name && user.name.toLowerCase().includes(searchTerm);
-    });
-    setUsers(filteredResults);
 
-  }
-  
+      if (searchTerm === "") {
+        setUsers(constUser);
+        return;
+      }
+      else{   
+        const filteredResults = constUser.filter(user => {
+        return user.name && user.name.toLowerCase().includes(searchTerm);
+      });
+      setUsers(filteredResults);
+    }
   }
 
   const handleSend = () => {
     if (!newMessage.trim()) return;
+
     setMessages((prev) => [
       ...prev,
       { _id: uuidv4(), senderId: currentUser._id, message: newMessage, createdAt: new Date() },
@@ -87,11 +90,14 @@ export default function Messages() {
 
   const fetchFromDb = (user1, user2,manual) => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       navigate("/login");
       return;
     }
+
     setPrevLastID(messages[messages.length - 1]?._id);
+
     axios
       .post(
         "http://localhost:3000/api/chat/get-messages",
@@ -115,10 +121,12 @@ export default function Messages() {
 
   const insertIntoDb = (senderId, receiverId, message) => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       navigate("/login");
       return;
     }
+
     axios
       .post(
         "http://localhost:3000/api/chat/send-message",
@@ -130,7 +138,7 @@ export default function Messages() {
         }
       )
       .then((res) => {
-        // console.log("Inserted message", res.data);
+        console.log("Inserted message", res.data);
       })
       .catch((err) => {
         console.error("Error Inserting Data", err);
@@ -139,11 +147,14 @@ export default function Messages() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       navigate("/login");
       return;
     }
+
     scrollToBottom();
+
     axios
       .get("http://localhost:3000/api/session/gettherapistpatients", {
         headers: {
@@ -178,18 +189,22 @@ export default function Messages() {
 
   useEffect(() => {
     if (!selectedUser.id || !currentUser._id) return;
-    fetchFromDb(currentUser._id, selectedUser.id);
+
+    fetchFromDb(currentUser._id, selectedUser.id);  //get messages from the database 
+
     const interval = setInterval(() => {
       fetchFromDb(currentUser._id, selectedUser.id);
-    }, 1000);
-    return () => clearInterval(interval);
+    }, 1000); 
+
+    return () => clearInterval(interval); 
+
   }, [selectedUser, currentUser]);
 
   useEffect(() => {
     if (isUserAtBottom()) {
       scrollToBottom();
     }
-  }, [messages]);
+  }, [messages]); 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -214,6 +229,7 @@ export default function Messages() {
             console.error("Error fetching :", err);
           });
   }, []);
+
   const handleUserClick = (user) => {
     setSelectedUser(user);
     setMessages([]);
@@ -244,7 +260,7 @@ export default function Messages() {
                 type="text"
                 placeholder="Search for patients..."
                 className="border border-gray-300 rounded px-4 py-2 mb-4 w-full"
-                onChange={(e)=> handleSearch(e)}
+                onChange={(e)=> handleSearch(e)} //search bar
                 />
               <ul>
                 <div className=" mb-2 max-h-[500px] overflow-y-auto">
@@ -255,7 +271,7 @@ export default function Messages() {
                     
                     if (aIsUnread && !bIsUnread) return -1;  // 'a' is unread, so place it before 'b'
                     if (!aIsUnread && bIsUnread) return 1;   // 'b' is unread, so place it before 'a'
-                    return 0;  // If both are unread or both are read, keep their order as is
+                    return 0;  // If both are unread or both are read, keep their order as it is
                  }).map((user) => (
                   <li
                     key={user.id}

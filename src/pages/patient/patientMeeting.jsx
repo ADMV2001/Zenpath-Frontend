@@ -35,7 +35,9 @@ const PatientMeetingPage = () => {
     
 
   }, []);
+
   const room = id;
+  
   return (
     <div>
                   <MeetingNavBar actor="patient" />

@@ -17,6 +17,7 @@ export default function PatientAppointments() {
   const [sessionTitle, setSessionTitle] = useState("Upcoming");
   const [viewReqModel, setViewReqModel] = useState(false);
   const [singleSession, setSingleSession] = useState({});
+  const [coins, setCoins] = useState(0)
 
   const navigate = useNavigate();
 
@@ -41,16 +42,20 @@ export default function PatientAppointments() {
           const startDate = event.sessionDate;
           const id = event._id;
           const title = event.therapistId.name + " - " + event.sessionType + " Session";
+          const state = event.state.toLowerCase();
           let color = "#2563eb"; // default color
-          switch (event.state) {
-            case "Pending":
+          switch (state) {
+            case "pending":
               color = "#fbbf24"; // yellow
               break;
-            case "Confirmed":
+            case "confirmed":
               color = "#4ade80"; // green
               break;
-            case "Finished":
+            case "finished":
               color = "#ccc"; // gray
+              break;
+            case "started":
+              color = "#9333ea"; // purple
               break;
             default:
               color = "#2563eb";
@@ -73,6 +78,22 @@ export default function PatientAppointments() {
       });
     setLoading(false);
   }, [navigate]);
+
+  useEffect(()=>{
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    //reload wallet balance
+              axios.get("http://localhost:3000/api/wallet/get_patient_wallet", {
+                headers: { Authorization: `Bearer ${token}` },
+              }).then((res) => {
+                setCoins(res.data.coins);
+              });
+
+  },[])
 
   const handleStateFilter = (value) => {
     if (value === "all") {
@@ -137,27 +158,73 @@ export default function PatientAppointments() {
       });
   };
 
-  const startMeeting = (sessionId,roomName) => {
-      console.log(roomName);
+  function parseDurationToMinutes(str) {
+    const lower = str.toLowerCase().trim();
 
-      const token = localStorage.getItem("token");
-      if (!token) {
-          navigate("/login");
-          return;
-      }
-      axios.post("http://localhost:3000/api/session/updateSessionState",{sessionId,state:"Started"}, {
-          headers: {
-              Authorization: `Bearer ${token}`,
-          },
-      })
-      .then((res) => {
-          navigate(`/patient_session/${sessionId}`);
-      })
-      .catch((err) => {
-          console.error("Error fetching events:", err);
-          setLoading(false);
-      });  
+    // grab the numeric part
+    const num = parseFloat(lower);
+    if (isNaN(num)) {
+      console.warn("Couldn't parse sessionDuration:", str);
+      return 0;
     }
+
+    // decide unit
+    if (lower.includes("hour")) {
+      return num * 60;
+    }
+    // default to minutes
+    return num;
+  }
+
+  const startMeeting = async (sessionId, roomName) => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/login");
+    return;
+  }
+
+  const minutes     = parseDurationToMinutes(singleSession.sessionDuration);
+  const coinsNeeded = Math.ceil(minutes / 30);
+
+  if (coins < coinsNeeded) {
+    toast.error(`Need ${coinsNeeded} coins but you have ${coins}.`);
+    return;
+  }
+
+  try {
+    // 1) Deduct from patient
+    await axios.post(
+      "http://localhost:3000/api/wallet/add_coins",
+      { coins: -coinsNeeded },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // 2) Mark session started
+    await axios.post(
+      "http://localhost:3000/api/session/updateSessionState",
+      { sessionId, state: "Started" },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // 3) Credit therapist
+    await axios.post(
+      "http://localhost:3000/api/wallet/add_coins_to_therapist",
+      {
+        userId: singleSession.therapistId._id,
+        coins: coinsNeeded
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    // 4) Only navigate once everything succeeded
+    navigate(`/patient_session/${sessionId}`);
+  } catch (err) {
+    console.error("Error starting session:", err);
+    toast.error(err.response?.data?.message || "Could not start session");
+    setLoading(false);
+  }
+};
+
 
   const handleAcceptSession = (sessionId) => {
     const token = localStorage.getItem("token");
@@ -211,8 +278,6 @@ export default function PatientAppointments() {
                 }}
                 contentHeight="auto"
                 eventDisplay="block"
-                eventColor="#2563eb"
-                eventTextColor="#FFFFFF"
               />
             </div>
 
@@ -268,7 +333,7 @@ export default function PatientAppointments() {
                 {events.map((event, index) => (
                   <div key={index} className="flex justify-between items-center p-4 bg-transparent rounded-lg border border-gray-300">
                     <div>
-                      <p className="font-medium text-black">{event.userId.name}</p>
+                      <p className="font-medium text-black">Dr. {event.therapistId.name}</p>
                       <p className="text-sm text-gray-500">
                         {
                           event.sessionDate === new Date().toISOString().slice(0, 10)

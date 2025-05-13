@@ -10,6 +10,7 @@ export default function TherapistWallet() {
   const [coinAmount, setCoinAmount] = useState(0);
   const [bankName, setBankName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const [withdrawalAmount, setWithdrawalAmount] = useState("");
   const [accountHolder, setAccountHolder] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
@@ -41,6 +42,7 @@ export default function TherapistWallet() {
           coins: coinAmount,
           bankName,
           accountNumber,
+          withdrawalAmount,
           accountHolder,
           password,
         },
@@ -56,6 +58,7 @@ export default function TherapistWallet() {
       // Optionally reset form
       setBankName("");
       setAccountNumber("");
+      setWithdrawalAmount("");
       setAccountHolder("");
       setPassword("");
     } catch (error) {
@@ -64,7 +67,7 @@ export default function TherapistWallet() {
     }
   };
 
-  const cashEquivalent = (coinAmount * 0.5).toFixed(2);
+  const cashEquivalent = (coinAmount * 1000).toFixed(2);
 
   return (
     <>
@@ -88,7 +91,7 @@ export default function TherapistWallet() {
               </div>
               <div className="flex flex-col items-center justify-center p-4 border border-gray-200 rounded-lg relative">
                 <h2 className="text-lg font-semibold text-gray-700 mb-2">Cash Equivalent</h2>
-                <p className="text-3xl font-bold text-blue-700">{cashEquivalent} LKR</p>
+                <p className="text-3xl font-bold text-blue-700">LKR {cashEquivalent} </p>
                 <BsBank className="absolute left-[30px] top-[30px] w-[50px] h-[50px]" />
               </div>
             </div>
@@ -96,7 +99,7 @@ export default function TherapistWallet() {
             {/* Withdraw Form */}
             
             <form
-              className="bg-white rounded-xl shadow p-6 w-full"
+              className="bg-white rounded-xl shadow p-6 w-full h-[350px] overflow-y-scroll ]"
               onSubmit={handleWithdraw}
             >
                 <div className="min-h-[450px] bg-white">
@@ -134,6 +137,17 @@ export default function TherapistWallet() {
               </div>
 
               <div className="mb-2">
+                <label className="block text-gray-700 font-semibold mb-2">Withdrawal Amount</label>
+                <input
+                  type="text"
+                  value={withdrawalAmount}
+                  onChange={(e) => setAccountNumber(e.target.value)}
+                  required
+                  className="w-full border border-gray-300 rounded px-4 py-2"
+                />
+              </div>
+
+              <div className="mb-2">
                 <label className="block text-gray-700 font-semibold mb-2">Account Holder Name</label>
                 <input
                   type="text"
@@ -144,16 +158,7 @@ export default function TherapistWallet() {
                 />
               </div>
 
-              <div className="mb-2">
-                <label className="block text-gray-700 font-semibold mb-2">Confirm Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full border border-gray-300 rounded px-4 py-2"
-                />
-              </div>
+              
 
               <button
                 type="submit"

@@ -25,7 +25,7 @@ export default function PatientDashboardCards() {
     }).then((res)=>{
         setCoinAmount(res.data.coins);
     })
-},[])
+  },[])
 
     const cards = [
       { label: "Total Sessions", value: sessionCount, change: "+12%", positive: true },
@@ -76,12 +76,13 @@ export default function PatientDashboardCards() {
           </div>
         ))}
         <div className="w-[300px] bg-white rounded-xl flex relative shadow">
-          <span className="absolute left-[15px] top-[10px] text-[22px] text-blue-600 font-[poppins] font-bold">ZenWallet</span>
-          <span className="absolute left-[15px] top-[38px] text-[13px] text-gray-600 font-[poppins]">Balance</span>
-          <span className="absolute right-[20px] top-[6px] text-[32px] text-gray-600 font-[poppins] font-bold"><CountUp end={coinAmount} duration={2} /></span>
+        <img src="wallet-1.JPG" alt="" className="object-contain rounded-lg"/>
+          <span className="absolute left-[15px] top-[10px] text-[22px] text-white font-[poppins] font-bold">ZenWallet</span>
+          <span className="absolute left-[15px] top-[38px] text-[13px] text-gray-200 font-[poppins]">Zencoin Balance</span>
+          <span className="absolute right-[20px] top-[6px] text-[32px] text-gray-100 font-[poppins] font-bold"><CountUp end={coinAmount} duration={2} /></span>
           
-          <Link className="absolute bottom-[10px] left-[15px] text-blue-600 text-[12px] font-semibold ">ZenCoin?</Link>
-          <button className="bg-blue-600 text-white rounded-lg p-1.5 absolute bottom-[10px] right-[10px] font-semibold cursor-pointer w-[100px] text-[14px]"
+          <Link className="absolute bottom-[10px] left-[15px] text-gray-200 text-[12px] font-semibold ">ZenCoin?</Link>
+          <button className="bg-[#161179] text-white rounded-lg p-1.5 absolute bottom-[10px] right-[10px] font-semibold cursor-pointer w-[100px] text-[14px]"
           onClick={() => {
             navigate('/patient_wallet')
           }}

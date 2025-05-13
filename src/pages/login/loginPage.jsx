@@ -79,7 +79,7 @@ if (user.userRole === "admin") {
     <>
       <NavBar />
       <div className="min-h-[calc(100vh-70px)] flex item-center justify-center relative bg-gradient-to-r from-white to-blue-100 py-[20px]">
-        <div className="h-[560px] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.15)] rounded-4xl p-5 px-8 w-full max-w-md text-center mt-[40px] md:mb-[20px]">
+        <div className="h-[500px] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.15)] rounded-4xl p-5 px-8 w-full max-w-md text-center mt-[40px] md:mb-[20px]">
           <h2 className="text-3xl text-[#03045E] mb-6 font-[poppins] font-semibold">Let's Seek Peace in Mind</h2>
 
           <div className="flex justify-center items-center w-[150px] h-[150px] mx-auto">
@@ -114,11 +114,7 @@ if (user.userRole === "admin") {
           {errorMessage && (
             <div className="mt-4 text-sm text-red-600">{errorMessage}</div>
           )}
-
-          <div className="mt-3 text-gray-600">or</div>
-          <button className="w-full flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-700 py-2 rounded-lg font-medium shadow-sm hover:bg-gray-100 transition mt-3">
-            <img src="google.png" alt="google" className="w-[20px] object-cover" /> Login with Google
-          </button>
+          
 
           <p className="mt-4 text-sm text-gray-600">
             Don't have an account?

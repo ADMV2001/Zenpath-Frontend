@@ -29,6 +29,7 @@ export default function AppointmentList() {
     };
     fetchAppointments();
   }, []);
+
   const handleViewClick = (sessionId) => {
     const token = localStorage.getItem("token");
         if (!token) {
@@ -49,9 +50,9 @@ export default function AppointmentList() {
         .catch(err => {
             console.error("Error fetching events:", err);
             setLoading(false);
-        });
-    
+        });    
   }
+  
   const startMeeting = (sessionId,roomName) => {
     console.log(roomName);
     const token = localStorage.getItem("token");
