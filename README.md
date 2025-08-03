@@ -1,4 +1,4 @@
-<h1>Please Find Out the Backend From here: (https://github.com/ADMV2001/Zenpath-Backend) </h1>
+<h1>Please Refer to the Backend From here: (https://github.com/ADMV2001/Zenpath-Backend) </h1>
 
 # React + Vite
 
